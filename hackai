@@ -1,1 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PierreHack AI - WILD WEST EXPLOIT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rye&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Special Elite', cursive, sans-serif; 
+            background: #0d0a08 radial-gradient(circle, rgba(35,22,15,0.8) 0%, rgba(13,10,8,1) 90%);
+        }
+        .font-western { font-family: 'Rye', cursive; }
+        .font-heading { font-family: 'Cinzel', serif; }
 
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        
+        @keyframes pulse-red { 
+            0%, 100% { box-shadow: 0 0 10px rgba(185, 28, 28, 0.4); } 
+            50% { box-shadow: 0 0 25px rgba(185, 28, 28, 0.9); } 
+        }
+        .error-glow { animation: pulse-red 2s infinite; }
+
+        /* Western Wood & Parchment Cards */
+        .western-card {
+            background: linear-gradient(145deg, #1f1712, #140f0b);
+            border: 2px solid #5c4328;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.9);
+            position: relative;
+        }
+        .western-card::before {
+            content: ''; position: absolute; top: 3px; left: 3px; right: 3px; bottom: 3px;
+            border: 1px solid rgba(180, 130, 70, 0.2); pointer-events: none;
+        }
+
+        /* Game Buttons */
+        .game-btn { 
+            position: relative; 
+            overflow: hidden; 
+            transition: all 0.3s ease; 
+            background: #18110c;
+            border: 2px solid #3d2b1d;
+        }
+        .game-btn:hover {
+            border-color: #a87a41;
+            box-shadow: 0 0 15px rgba(168, 122, 65, 0.3);
+            transform: translateY(-2px);
+        }
+        .game-btn.active { 
+            border-color: #b91c1c; 
+            box-shadow: 0 0 20px rgba(185, 28, 28, 0.6); 
+            transform: translateY(-3px); 
+            background: #261612; 
+        }
+        .game-icon-container { transition: transform 0.3s ease; }
+        .game-btn:hover .game-icon-container { transform: scale(1.1) rotate(-3deg); }
+        .game-btn.active .game-icon-container { transform: scale(1.15); }
+        
+        /* Loading Bar */
+        .loading-bar { position: relative; overflow: hidden; background-color: #1a120c; border: 1px solid #5c4328; }
+        .loading-bar::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, #b91c1c, #d97706, transparent);
+            animation: loading 1.5s infinite ease-in-out;
+        }
+        @keyframes loading { 100% { left: 200%; } }
+        
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-slide-up { animation: slideUpFade 0.4s ease-out forwards; }
+        @keyframes fadeOutDown {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+        .animate-fade-out { animation: fadeOutDown 0.4s ease-out forwards; }
+
+        .btn-western-primary {
+            background: linear-gradient(180deg, #991b1b 0%, #7f1d1d 100%);
+            border: 2px solid #dc2626;
+            color: #fef3c7;
+            text-shadow: 1px 1px 2px #000;
+            box-shadow: 0 4px 15px rgba(153, 27, 27, 0.5);
+        }
+        .btn-western-primary:hover {
+            background: linear-gradient(180deg, #b91c1c 0%, #991b1b 100%);
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.7);
+        }
+    </style>
+</head>
+<body class="text-[#e2c99b] min-h-screen flex flex-col items-center p-4 overflow-x-hidden selection:bg-red-900 selection:text-amber-100">
+
+    <!-- VIEW 1: LANDING PAGE -->
+    <div id="view-landing" class="flex-1 w-full max-w-xl flex flex-col items-center justify-center animate-fade-in">
+        <div class="text-center mb-8">
+            <!-- Sheriff Badge Logo -->
+            <div class="relative w-28 h-28 mx-auto mb-3 flex items-center justify-center">
+                <svg class="w-28 h-28 fill-amber-600 drop-shadow-[0_0_15px_rgba(217,119,6,0.5)]" viewBox="0 0 100 100">
+                    <!-- Sheriff Star -->
+                    <path d="M50 5 L63 35 L95 38 L71 60 L78 92 L50 75 L22 92 L29 60 L5 38 L37 35 Z" stroke="#3d2b1d" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="18" fill="#1f1712" stroke="#d97706" stroke-width="2"/>
+                </svg>
+                <span class="absolute text-xs font-western text-amber-500 tracking-tighter">AI</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-western text-amber-500 tracking-wider mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                PierreHack <span class="text-red-600">AI</span>
+            </h1>
+            <p class="text-xs text-amber-700 uppercase tracking-widest font-heading font-bold">Système d'exploitation Outlaw v2.4</p>
+        </div>
+
+        <div class="western-card rounded-xl p-8 w-full text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-amber-700 via-red-700 to-amber-700"></div>
+            <h2 class="text-2xl font-western text-amber-400 mb-4 tracking-wide">Exploitation des Algorithmes</h2>
+            <p class="text-sm text-amber-200/80 mb-8 leading-relaxed">
+                Le réseau neuronal PierreHack analyse les serveurs RNG du Far West en temps réel et fournit des prédictions avec une précision allant jusqu'à <span class="text-amber-400 font-bold drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]">96.4%</span>.
+            </p>
+            <button type="button" id="btn-start" class="w-full btn-western-primary py-4 rounded-lg font-western text-lg tracking-wider transition-all flex items-center justify-center gap-3 group">
+                Activer le système et démarrer
+                <span class="text-xl group-hover:translate-x-1 transition-transform">🤠</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- VIEW 2: LOADING TRANSITION -->
+    <div id="view-loader" class="hidden flex-1 w-full max-w-xl flex-col items-center justify-center animate-fade-in">
+        <div class="text-center">
+            <div class="w-20 h-20 bg-amber-950/40 border border-amber-800/50 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                <span class="text-3xl animate-spin">🌵</span>
+            </div>
+            <h3 class="text-xl font-western text-amber-400 mb-2">Connexion aux serveurs du saloon...</h3>
+            <p class="text-xs text-amber-700 mb-6">Initialisation du réseau neuronal et création d'une session sécurisée...</p>
+            <div class="w-48 h-2 rounded-full mx-auto overflow-hidden loading-bar"></div>
+        </div>
+    </div>
+
+    <!-- VIEW 3: MAIN DASHBOARD -->
+    <div id="view-main" class="hidden flex-1 w-full max-w-xl flex-col items-center pt-6 pb-20 animate-fade-in">
+        
+        <!-- Header -->
+        <div class="w-full flex items-center justify-between mb-8 pb-4 border-b border-amber-900/50">
+            <div class="flex items-center gap-3">
+                <svg class="w-10 h-10 fill-amber-600 drop-shadow-[0_0_8px_rgba(217,119,6,0.5)]" viewBox="0 0 100 100">
+                    <path d="M50 5 L63 35 L95 38 L71 60 L78 92 L50 75 L22 92 L29 60 L5 38 L37 35 Z"/>
+                </svg>
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
+                        <span class="text-xs font-heading font-black text-amber-500 tracking-wider">SYSTÈME SÉCURISÉ</span>
+                    </div>
+                    <p class="text-[10px] font-bold text-amber-800 tracking-widest">SESSION: 0x8F2A...B19</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Selection -->
+        <div class="w-full flex items-center justify-between mb-4">
+            <h3 class="text-xs font-heading font-bold text-amber-400 tracking-wider uppercase">Sélectionnez l'algorithme ciblé :</h3>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 w-full mb-8">
+            <!-- Mines Game -->
+            <button type="button" data-game="MINES" class="game-btn rounded-xl p-3 flex flex-col items-center justify-center gap-3">
+                <div class="w-16 h-16 rounded-lg overflow-hidden bg-gradient-to-br from-amber-950 to-black border border-amber-800/40 flex items-center justify-center game-icon-container relative shadow-inner">
+                     <span class="text-3xl relative z-10 drop-shadow-md">🧨</span>
+                </div>
+                <span class="font-western text-xs text-amber-200 tracking-wider">MINES</span>
+            </button>
+            
+            <!-- Aviator Game -->
+            <button type="button" data-game="AVIATOR" class="game-btn rounded-xl p-3 flex flex-col items-center justify-center gap-3">
+                <div class="w-16 h-16 rounded-lg overflow-hidden bg-gradient-to-br from-red-950 to-black border border-red-900/40 flex items-center justify-center game-icon-container relative shadow-inner">
+                     <span class="text-3xl relative z-10 drop-shadow-md">🦅</span>
+                </div>
+                <span class="font-western text-xs text-amber-200 tracking-wider">AVIATOR</span>
+            </button>
+            
+            <!-- Apple of Fortune Game -->
+            <button type="button" data-game="APPLE" class="game-btn rounded-xl p-3 flex flex-col items-center justify-center gap-3">
+                <div class="w-16 h-16 rounded-lg overflow-hidden bg-gradient-to-br from-yellow-950 to-black border border-yellow-800/40 flex items-center justify-center game-icon-container relative shadow-inner">
+                     <span class="text-3xl relative z-10 drop-shadow-md">🥃</span>
+                </div>
+                <span class="font-western text-[10px] text-center leading-tight text-amber-200 tracking-wider">FORTUNE<br>WHISKEY</span>
+            </button>
+        </div>
+
+        <button type="button" id="btn-get-signal" class="w-full bg-stone-900 border border-stone-800 text-stone-600 py-5 rounded-xl font-western text-sm tracking-widest transition-all flex items-center justify-center gap-3 opacity-50 cursor-not-allowed" disabled>
+            <svg id="icon-spin" class="w-5 h-5 animate-spin hidden text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            <span id="text-btn-signal">Démarrer la connexion au serveur</span>
+        </button>
+    </div>
+
+    <!-- MODAL ERROR (WANTED POSTER STYLE) -->
+    <div id="modal-error" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[60] hidden flex-col items-center justify-center p-4 animate-fade-in">
+        <div class="western-card rounded-2xl p-8 w-full max-w-sm shadow-2xl relative flex flex-col items-center text-center border-2 border-red-800">
+            <div class="w-16 h-16 bg-red-950/60 border border-red-800/60 rounded-full flex items-center justify-center mb-4">
+                <span class="text-3xl">⚠️</span>
+            </div>
+            <h3 class="text-2xl font-western text-red-500 mb-2">Compte non trouvé</h3>
+            <p class="text-xs text-amber-200/80 mb-6 leading-relaxed">
+                Désolé, l'algorithme ne peut pas être lié à votre compte actuel.<br>
+                Vous devez créer un <span class="text-amber-400 font-bold">nouveau compte</span> pour garantir le succès de l'exploitation.
+            </p>
+            <button type="button" id="btn-show-register" class="btn-western-primary py-3.5 px-6 rounded-lg font-western text-sm transition-all w-full shadow-lg">
+                Créer un nouveau compte
+            </button>
+            <button type="button" id="btn-close-error" class="absolute top-4 right-4 text-amber-700 hover:text-amber-400 transition-colors bg-amber-950/40 p-1.5 rounded-full border border-amber-900/40">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL REGISTER -->
+    <div id="modal-register" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex-col items-center justify-center p-4 animate-fade-in">
+        <div class="western-card rounded-2xl p-6 w-full max-w-md shadow-2xl relative border-2 border-amber-800">
+            
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-amber-950/60 text-amber-500 border border-amber-800/60 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <span class="text-2xl">📜</span>
+                </div>
+                <h3 class="text-2xl font-western text-amber-400">Activation du nouveau compte</h3>
+                <p class="text-xs text-amber-700 mt-1 font-heading">Étapes simples pour connecter le réseau neuronal</p>
+            </div>
+
+            <div class="space-y-4 mb-6">
+                <!-- Instructions -->
+                <div class="bg-black/40 border border-amber-900/40 rounded-xl p-4 text-xs text-amber-200/90 leading-relaxed text-left space-y-3">
+                    <p class="flex items-center gap-3">
+                        <span class="bg-amber-700 text-amber-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 font-bold">1</span> 
+                        <span>Inscrivez-vous pour un <span class="text-amber-400 font-bold">nouveau compte</span> via le bouton ci-dessous.</span>
+                    </p>
+                    <p class="flex items-center gap-3">
+                        <span class="bg-amber-700 text-amber-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 font-bold">2</span> 
+                        <span>Utilisez le code promo <span class="text-amber-300 font-bold bg-amber-950/80 px-2 py-0.5 rounded border border-amber-700/50">KNB777</span></span>
+                    </p>
+                    <p class="flex items-center gap-3">
+                        <span class="bg-amber-700 text-amber-100 w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 font-bold">3</span> 
+                        <span>Envoyez une capture d'écran de votre ID pour l'activer.</span>
+                    </p>
+                </div>
+                
+                <!-- Registration Button -->
+                <a href="https://reffpa.com/L?tag=d_5547148m_69917c_&site=5547148&ad=69917&r=registration" target="_blank" rel="noreferrer" class="w-full btn-western-primary py-3.5 rounded-xl font-western text-xs tracking-wider flex items-center justify-center gap-2 transition-all relative overflow-hidden mb-3">
+                    <span class="relative z-10">S'inscrire sur 1XBET</span>
+                    <svg class="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+
+                <!-- Telegram Button -->
+                <a href="https://t.me/+OIQwEr-t40xmYTRi" target="_blank" rel="noreferrer" class="w-full bg-[#1c455d] hover:bg-[#235877] border border-[#3881aa] text-amber-100 py-3.5 rounded-xl font-western text-xs tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.888-.662 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    Envoyer la capture d'écran
+                </a>
+            </div>
+            
+            <button type="button" id="btn-close-modal" class="absolute top-4 right-4 text-amber-700 hover:text-amber-400 transition-colors bg-amber-950/40 p-1.5 rounded-full border border-amber-900/40">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- LIVE WINS FEED -->
+    <div id="live-feed" class="fixed bottom-4 left-4 right-4 md:left-6 md:right-auto md:w-72 flex flex-col gap-2 z-40 pointer-events-none">
+    </div>
+
+    <script>
+        document.getElementById('btn-start').addEventListener('click', () => {
+            document.getElementById('view-landing').classList.add('hidden');
+            document.getElementById('view-landing').classList.remove('flex');
+            
+            document.getElementById('view-loader').classList.remove('hidden');
+            document.getElementById('view-loader').classList.add('flex');
+            
+            setTimeout(() => {
+                document.getElementById('view-loader').classList.add('hidden');
+                document.getElementById('view-loader').classList.remove('flex');
+                
+                document.getElementById('view-main').classList.remove('hidden');
+                document.getElementById('view-main').classList.add('flex');
+            }, 2000);
+        });
+
+        document.querySelectorAll('.game-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.game-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                const currentBtn = e.currentTarget;
+                currentBtn.classList.add('active');
+
+                const btnSignal = document.getElementById('btn-get-signal');
+                btnSignal.disabled = false;
+                btnSignal.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-stone-900', 'border-stone-800', 'text-stone-600');
+                btnSignal.classList.add('btn-western-primary');
+                document.getElementById('text-btn-signal').textContent = `Pirater ${currentBtn.dataset.game}`;
+            });
+        });
+
+        document.getElementById('btn-get-signal').addEventListener('click', () => {
+            const btnSignal = document.getElementById('btn-get-signal');
+            const textBtn = document.getElementById('text-btn-signal');
+            const iconSpin = document.getElementById('icon-spin');
+            
+            btnSignal.disabled = true;
+            textBtn.textContent = 'Injection du code en cours...';
+            iconSpin.classList.remove('hidden');
+
+            setTimeout(() => {
+                btnSignal.disabled = false;
+                textBtn.textContent = 'Réessayer';
+                iconSpin.classList.add('hidden');
+
+                document.getElementById('modal-error').classList.remove('hidden');
+                document.getElementById('modal-error').classList.add('flex');
+            }, 1800);
+        });
+
+        document.getElementById('btn-show-register').addEventListener('click', () => {
+            document.getElementById('modal-error').classList.add('hidden');
+            document.getElementById('modal-error').classList.remove('flex');
+            
+            document.getElementById('modal-register').classList.remove('hidden');
+            document.getElementById('modal-register').classList.add('flex');
+        });
+
+        document.getElementById('btn-close-error').addEventListener('click', () => {
+            document.getElementById('modal-error').classList.add('hidden');
+            document.getElementById('modal-error').classList.remove('flex');
+        });
+
+        document.getElementById('btn-close-modal').addEventListener('click', () => {
+            document.getElementById('modal-register').classList.add('hidden');
+            document.getElementById('modal-register').classList.remove('flex');
+        });
+
+        const fakeGames = [
+            {name: 'MINES', icon: '🧨'}, 
+            {name: 'AVIATOR', icon: '🦅'}, 
+            {name: 'APPLE', icon: '🥃'}
+        ];
+
+        function generateRandomId() {
+            const endDigits = Math.floor(1000 + Math.random() * 9000); 
+            return `176***${endDigits}`;
+        }
+
+        function showLiveWin() {
+            const game = fakeGames[Math.floor(Math.random() * fakeGames.length)];
+            const eurAmount = Math.floor(Math.random() * 240) + 10;
+            const formattedAmount = '+' + eurAmount.toLocaleString('fr-FR') + ' €';
+
+            const feedContainer = document.getElementById('live-feed');
+            
+            const winItem = document.createElement('div');
+            winItem.className = 'western-card border border-amber-900/60 rounded-xl p-3 shadow-2xl flex items-center gap-3 animate-slide-up transition-all';
+            winItem.innerHTML = `
+                <div class="w-10 h-10 bg-black/60 rounded-lg flex items-center justify-center text-xl border border-amber-800/40">
+                    ${game.icon}
+                </div>
+                <div class="flex-1 flex justify-between items-center">
+                    <div>
+                        <p class="text-[11px] font-heading font-bold text-amber-400 tracking-wider">ID: ${generateRandomId()}</p>
+                        <p class="text-[9px] text-amber-700 font-bold">${game.name}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs font-western text-amber-400">${formattedAmount}</p>
+                    </div>
+                </div>
+            `;
+
+            feedContainer.prepend(winItem);
+
+            if (feedContainer.children.length > 3) {
+                const oldestItem = feedContainer.lastElementChild;
+                oldestItem.classList.remove('animate-slide-up');
+                oldestItem.classList.add('animate-fade-out');
+                
+                setTimeout(() => {
+                    if(oldestItem.parentNode) {
+                        oldestItem.remove();
+                    }
+                }, 400); 
+            }
+        }
+
+        setTimeout(function winLoop() {
+            showLiveWin();
+            const nextDelay = Math.floor(Math.random() * 4000) + 2000;
+            setTimeout(winLoop, nextDelay);
+        }, 1000);
+    </script>
+</body>
+</html>
